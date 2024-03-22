@@ -309,6 +309,11 @@ class App(customtkinter.CTk):
             self.textbox.insert("0.0", "Set this if you are using the Floating Point extensions for RI5CY. \n\n")
             self.textbox.configure(state="disabled")
 
+        def hover_vsize(event):
+            self.textbox.configure(state="normal")
+            self.textbox.insert("0.0", "Sets the Vector Size (number of elements) to use in the VCU Instruction tests. \n\n")
+            self.textbox.configure(state="disabled")
+
 
         def toggle_core_selection(event):
             if (self.klessydra_core_optionmenu.get() == "Klessydra-Morph" or self.klessydra_core_optionmenu.get() == "Klessydra-HetC"):
@@ -412,18 +417,18 @@ class App(customtkinter.CTk):
         self.tabview.grid(row=0, column=1, padx=(20, 0), sticky="nsew", rowspan=4)
         self.tabview.add("Klessydra")
         self.tabview.add("PULPino")
-        self.tabview.add("Software defines")
+        self.tabview.add("Software Defines")
         self.tabview.add("Toolchain")
 
         self.klessydra_switch = customtkinter.CTkSwitch(self.tabview.tab("Klessydra"), text="Klessydra", font=customtkinter.CTkFont(size=16, weight="bold"))
-        self.klessydra_core_label = customtkinter.CTkLabel(self.tabview.tab("Klessydra"), text="Klessydra Core: ", font=customtkinter.CTkFont(size=14, weight="bold"))
-        self.klessydra_core_optionmenu = customtkinter.CTkOptionMenu(self.tabview.tab("Klessydra"), dynamic_resizing=False, command=toggle_core_selection,
-                                                        values=["Klessydra-Morph", "Klessydra-HetC", "Klessydra-T13", "Klessydra-T03", "Klessydra-T02", "Klessydra-S1"])
+        self.klessydra_core_label = customtkinter.CTkLabel(self.tabview.tab("Klessydra"), text="Klessydra Core: ", font=customtkinter.CTkFont(size=12, weight="bold"))
+        self.klessydra_core_optionmenu = customtkinter.CTkOptionMenu(self.tabview.tab("Klessydra"), width=175, dynamic_resizing=False, command=toggle_core_selection,
+                                                        values=["Klessydra-Morph", "Klessydra-HetC", "Klessydra-T13", "Klessydra-T03", "Klessydra-T02", "Klessydra-S1, Klessydra-F03, Klessydra-fT13"])
         self.ISA_frame = customtkinter.CTkScrollableFrame(self.tabview.tab("Klessydra"), label_text="ISA Extensions", width=100, height=50)
         self.KLESS_RVE_switch = customtkinter.CTkSwitch(master=self.ISA_frame, text="RV32E")
         self.KLESS_RVM_switch = customtkinter.CTkSwitch(master=self.ISA_frame, text="RV32M")
         self.Features_frame = customtkinter.CTkScrollableFrame(self.tabview.tab("Klessydra"), label_text="Core Features")
-        self.THREAD_POOL_SIZE_label = customtkinter.CTkLabel(master=self.Features_frame, text="Thread Pool Size", font=customtkinter.CTkFont(size=14, weight="bold"))
+        self.THREAD_POOL_SIZE_label = customtkinter.CTkLabel(master=self.Features_frame, text="Thread Pool Size", font=customtkinter.CTkFont(size=12, weight="bold"))
         self.THREAD_POOL_SIZE_combobox = customtkinter.CTkComboBox(master=self.Features_frame, values=["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16"], width=50)
         self.Morph_en_switch = customtkinter.CTkSwitch(master=self.Features_frame, text="Morph_en")
         self.Latch_RF_switch = customtkinter.CTkSwitch(master=self.Features_frame, text="Latch_RF")
@@ -432,20 +437,20 @@ class App(customtkinter.CTk):
         self.fetch_stage_en_switch = customtkinter.CTkSwitch(master=self.Features_frame, text="fetch_stage_en")
         self.branch_predict_en_switch = customtkinter.CTkSwitch(master=self.Features_frame, text="branch_predict_en")
         self.btb_en_switch = customtkinter.CTkSwitch(master=self.Features_frame, text="btb_en")
-        self.blb_len_label = customtkinter.CTkLabel(master=self.Features_frame, text="btb_len", font=customtkinter.CTkFont(size=14, weight="bold"))
+        self.blb_len_label = customtkinter.CTkLabel(master=self.Features_frame, text="btb_len", font=customtkinter.CTkFont(size=12, weight="bold"))
         self.btb_len_combobox = customtkinter.CTkComboBox(master=self.Features_frame, values=["1", "2", "4", "8", "16", "32", "64", "128", "256","512","1024"], width=70)
         self.VCU_Frame = customtkinter.CTkScrollableFrame(self.tabview.tab("Klessydra"), label_text="VCU Features")
         self.accl_en_switch = customtkinter.CTkSwitch(master=self.VCU_Frame, text="accl_en")
         self.Replicated_Accl_en_switch = customtkinter.CTkSwitch(master=self.VCU_Frame, text="Replicated_Accl_en")
         self.Multithreaded_Accl_en_switch = customtkinter.CTkSwitch(master=self.VCU_Frame, text="Multithreaded_Accl_en")
-        self.SIMD_label = customtkinter.CTkLabel(self.VCU_Frame, text="SIMD", font=customtkinter.CTkFont(size=14, weight="bold"))
+        self.SIMD_label = customtkinter.CTkLabel(self.VCU_Frame, text="SIMD", font=customtkinter.CTkFont(size=12, weight="bold"))
         self.SIMD_combobox = customtkinter.CTkComboBox(self.VCU_Frame, values=["1", "2", "4", "8"], width=50)
-        self.SPM_NUM_label = customtkinter.CTkLabel(self.VCU_Frame, text="SPM_NUM", font=customtkinter.CTkFont(size=14, weight="bold"))
+        self.SPM_NUM_label = customtkinter.CTkLabel(self.VCU_Frame, text="SPM_NUM", font=customtkinter.CTkFont(size=12, weight="bold"))
         self.SPM_NUM_combobox = customtkinter.CTkComboBox(self.VCU_Frame, values=["2","3","4","5","6","7","8","9","10","11","12","13","14","15","16"], width=50)
-        self.SPM_SIZE_label = customtkinter.CTkLabel(self.VCU_Frame, text="SPM SIZE", font=customtkinter.CTkFont(size=14, weight="bold"))
+        self.SPM_SIZE_label = customtkinter.CTkLabel(self.VCU_Frame, text="SPM SIZE", font=customtkinter.CTkFont(size=12, weight="bold"))
         self.SPM_SIZE_combobox = customtkinter.CTkComboBox(self.VCU_Frame, values=["128", "256","512","1024","2048","4096","8192","16384","32768","65536"], width=70)
-        self.SPM_START_ADDR_label = customtkinter.CTkLabel(self.VCU_Frame, text="Mem map", font=customtkinter.CTkFont(size=14, weight="bold"))
-        self.SPM_START_ADDR_textbox = customtkinter.CTkTextbox(self.VCU_Frame, width=40, height=10, font=customtkinter.CTkFont(size=14, weight="bold"))
+        self.SPM_START_ADDR_label = customtkinter.CTkLabel(self.VCU_Frame, text="Mem map", font=customtkinter.CTkFont(size=12, weight="bold"))
+        self.SPM_START_ADDR_textbox = customtkinter.CTkTextbox(self.VCU_Frame, width=40, height=10, font=customtkinter.CTkFont(size=12, weight="bold"))
         self.SPM_START_ADDR_textbox.insert("0.0", text="0x10000000")
         self.monitoring_label = customtkinter.CTkLabel(self.tabview.tab("Klessydra"), text="Monitoring: ", font=customtkinter.CTkFont(size=12, weight="bold"))
         self.mcycle_en_switch = customtkinter.CTkSwitch(self.tabview.tab("Klessydra"), text="mcycle_en")
@@ -453,13 +458,12 @@ class App(customtkinter.CTk):
         self.mhpmcounter_en_switch = customtkinter.CTkSwitch(self.tabview.tab("Klessydra"), text="mhpcounter_en")
         self.count_all_switch = customtkinter.CTkSwitch(self.tabview.tab("Klessydra"), text="count_all")
         self.misc_label = customtkinter.CTkLabel(self.tabview.tab("Klessydra"), text="Misc: ", font=customtkinter.CTkFont(size=12, weight="bold"))
-
         self.debug_en_switch = customtkinter.CTkSwitch(self.tabview.tab("Klessydra"), text="debug_en")
         self.debug_en_switch.configure(state="disabled", progress_color="gray")
         self.tracer_en_switch = customtkinter.CTkSwitch(self.tabview.tab("Klessydra"), text="tracer_en")
 
         self.riscy_switch = customtkinter.CTkSwitch(self.tabview.tab("PULPino"), text="RISCY", font=customtkinter.CTkFont(size=16, weight="bold"))
-        self.pulpino_core_label = customtkinter.CTkLabel(self.tabview.tab("PULPino"), text="PULPino Core: ", font=customtkinter.CTkFont(size=14, weight="bold"))
+        self.pulpino_core_label = customtkinter.CTkLabel(self.tabview.tab("PULPino"), text="PULPino Core: ", font=customtkinter.CTkFont(size=12, weight="bold"))
         self.pulpino_core_optionmenu = customtkinter.CTkOptionMenu(self.tabview.tab("PULPino"), dynamic_resizing=False, command=toggle_core_selection,
                                                         values=["RI5CY", "ZERO-RISCY"])
         self.pulpino_rvc_switch = customtkinter.CTkSwitch(self.tabview.tab("PULPino"), text="RVC")
@@ -469,10 +473,14 @@ class App(customtkinter.CTk):
         self.ri5cy_frame = customtkinter.CTkScrollableFrame(self.tabview.tab("PULPino"), label_text="RI5CY Features", width=100)
         self.ri5cy_rv32f_switch = customtkinter.CTkSwitch(self.ri5cy_frame, text="RV32F")
 
+        self.vsize_label   = customtkinter.CTkLabel(self.tabview.tab("Software Defines"), text="VSIZE", font=customtkinter.CTkFont(size=12, weight="bold"))
+        self.vsize_textbox = customtkinter.CTkTextbox(self.tabview.tab("Software Defines"), width=60, height=10, font=customtkinter.CTkFont(size=12, weight="bold"))
+        self.vsize_textbox.insert("0.0", text="1")
+
 
         self.klessydra_switch.place(x=40, y=18)
         self.klessydra_core_label.place(x=40, y=60)
-        self.klessydra_core_optionmenu.place(x=165, y=55)
+        self.klessydra_core_optionmenu.place(x=175, y=55)
         self.ISA_frame.grid(row=1, column=0, padx=(20, 0), pady=(110, 0), sticky="nsew")
         self.KLESS_RVE_switch.grid(row=1, column=0, padx=5, pady=5, sticky="W")
         self.KLESS_RVM_switch.grid(row=2, column=0, padx=5, pady=5, sticky="W")
@@ -519,6 +527,8 @@ class App(customtkinter.CTk):
         self.ri5cy_frame.grid(row=2, column=1, padx=(20, 0), pady=(140, 0), sticky="nsew")
         self.ri5cy_rv32f_switch.grid(row=0, column=0, pady=(0,20), sticky="W")
 
+        self.vsize_label.grid(row=0, column=0, padx=(10, 0), pady=(20, 0), sticky="W")
+        self.vsize_textbox.grid(row=0, column=0, padx=(70, 0), pady=(20, 0), sticky="W")
 
         self.command_line.bind('<Return>', lambda e: self.compile_and_run_button_event() , add='+')
         self.klessydra_core_label.bind('<Enter>', hover_klessydra_core, add='+')
@@ -609,6 +619,11 @@ class App(customtkinter.CTk):
         self.ri5cy_rv32f_switch.bind('<Leave>', clear_text, add='+')
         self.pulpino_rvc_switch.bind('<Enter>', hover_pulpino_rvc, add='+')
         self.pulpino_rvc_switch.bind('<Leave>', clear_text, add='+')
+
+        self.vsize_label.bind('<Enter>', hover_vsize, add='+')
+        self.vsize_label.bind('<Leave>', clear_text, add='+')
+        self.vsize_textbox.bind('<Enter>', hover_vsize, add='+')
+        self.vsize_textbox.bind('<Leave>', clear_text, add='+')
 
         if (self.klessydra_core_optionmenu.get() == "Klessydra-Morph"):
             self.textbox.configure(state="disabled")
@@ -704,7 +719,7 @@ class App(customtkinter.CTk):
 
         FM_Size = "21"
         Filter_Size = "3"
-        VSIZE = "1"
+        VSIZE = self.vsize_textbox.get("0.0", "end")
         TIME = "0"
         COREMARK_ITR = "1"
 
